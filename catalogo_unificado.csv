@@ -1,0 +1,11 @@
+producto,precio,formato,proveedor,producto_norm
+Huevos,2.1,Docena,Proveedor_A,huevos
+Huevos L,2.2,12 uds,Proveedor_B,huevos l
+Leche,0.85,L,Proveedor_B,leche
+Leche Entera,0.9,Litro,Proveedor_A,leche entera
+Patata Monalisa,0.75,Kilogramo,Proveedor_B,patata monalisa
+Patatas,0.8,Kg,Proveedor_A,patatas
+Solomillo de Ternera,25.0,Kg,Proveedor_A,solomillo de ternera
+Solomillo Vacuno,26.5,Kilogramo,Proveedor_B,solomillo vacuno
+Tomate Pera,1.4,Kilogramo,Proveedor_B,tomate pera
+Tomates,1.5,Kg,Proveedor_A,tomates

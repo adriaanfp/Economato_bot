@@ -1,0 +1,6 @@
+            Item  Precio_Unidad Formato_Venta
+     Tomate Pera           1.40     Kilogramo
+Solomillo Vacuno          26.50     Kilogramo
+           Leche           0.85             L
+        Huevos L           2.20        12 uds
+ Patata Monalisa           0.75     Kilogramo

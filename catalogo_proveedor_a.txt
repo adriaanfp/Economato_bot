@@ -1,0 +1,6 @@
+            Producto  Coste Envase
+             Tomates    1.5     Kg
+Solomillo de Ternera   25.0     Kg
+        Leche Entera    0.9  Litro
+              Huevos    2.1 Docena
+             Patatas    0.8     Kg

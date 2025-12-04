@@ -1,0 +1,4 @@
+=== Proveedor_B ===
+- Tomate Pera: 5.0 un. x 1.4€ = 7.0€
+Total Proveedor: 7.0€
+

@@ -1,0 +1,5 @@
+pandas
+openpyxl
+thefuzz
+python-telegram-bot
+python-dotenv
