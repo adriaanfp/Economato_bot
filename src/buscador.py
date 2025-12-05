@@ -3,7 +3,10 @@ from thefuzz import process
 import json
 import os
 
-PREFERENCIAS_FILE = "preferencias.json"
+# Definir rutas absolutas para evitar errores de "File not found"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PREFERENCIAS_FILE = os.path.join(BASE_DIR, "preferencias.json")
+CSV_FILE = os.path.join(BASE_DIR, "catalogo_unificado.csv")
 
 def load_preferences():
     if not os.path.exists(PREFERENCIAS_FILE):
@@ -15,52 +18,57 @@ def load_preferences():
         return {}
 
 def obtener_datos_mejor_precio(producto_buscado):
-    try:
-        df = pd.read_csv('catalogo_unificado.csv')
-    except FileNotFoundError:
+    if not os.path.exists(CSV_FILE):
         return {"error": "catalogo_unificado.csv no encontrado. Ejecuta procesador.py primero."}
 
-    # Get list of unique product names (normalized)
+    try:
+        df = pd.read_csv(CSV_FILE)
+    except Exception as e:
+        return {"error": f"Error al leer el catálogo: {e}"}
+
+    # Aseguramos que la columna proveedor sea string
+    df['proveedor'] = df['proveedor'].astype(str)
+
+    # Obtener lista de productos únicos normalizados
     choices = df['producto_norm'].unique().tolist()
     
-    # Find top matches
+    # Buscar coincidencias
     matches = process.extract(producto_buscado.lower(), choices, limit=10)
     
-    # Filter by score > 60
+    # Filtrar por puntuación > 60
     valid_matches = [match[0] for match in matches if match[1] > 60]
     
     if not valid_matches:
         return None
 
-    # Filter dataframe for these products
-    candidates = df[df['producto_norm'].isin(valid_matches)]
+    # Filtrar dataframe por estos productos
+    candidates = df[df['producto_norm'].isin(valid_matches)].copy()
     
     if candidates.empty:
          return None
 
-    # --- LOGICA VIP ---
+    # --- LÓGICA VIP ---
     prefs = load_preferences()
     
-    # Fuzzy match for preferences
-    # Check if 'producto_buscado' is similar to any key in prefs
     proveedor_favorito = None
     if prefs:
+        # Buscar si el producto buscado tiene preferencia
         match_pref = process.extractOne(producto_buscado.lower(), list(prefs.keys()))
-        if match_pref and match_pref[1] > 80: # Threshold for preference match
+        if match_pref and match_pref[1] > 80:
             proveedor_favorito = prefs[match_pref[0]]
     
     es_favorito = False
     
     if proveedor_favorito:
-        # Check if favorite provider is in candidates
-        vip_candidates = candidates[candidates['proveedor'] == proveedor_favorito]
+        # Comparación case-insensitive
+        vip_candidates = candidates[candidates['proveedor'].str.lower() == proveedor_favorito.lower()]
+        
         if not vip_candidates.empty:
-            # If exists, force selection from this provider (cheapest among them if multiple)
             candidates = vip_candidates
             es_favorito = True
     # ------------------
 
-    # Find the row with the minimum price
+    # Encontrar la fila con el precio mínimo
     best_option = candidates.loc[candidates['precio'].idxmin()]
     
     return {
@@ -80,11 +88,9 @@ def buscar_mejor_precio(producto_buscado):
     if "error" in datos:
         return datos["error"]
 
-    return f"💰 GANADOR: {datos['producto']} | Proveedor: {datos['proveedor']} | Precio: {datos['precio']}€"
+    icono_vip = "⭐ VIP" if datos['es_favorito'] else "💰 Mejor Precio"
+    return f"{icono_vip}: {datos['producto']} | Proveedor: {datos['proveedor']} | Precio: {datos['precio']}€"
 
 if __name__ == "__main__":
     print("--- Probando Buscador ---")
-    print(buscar_mejor_precio("solomillo"))
-    print(buscar_mejor_precio("leche"))
     print(buscar_mejor_precio("tomate"))
-    print(buscar_mejor_precio("huevos"))
