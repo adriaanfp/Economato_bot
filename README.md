@@ -1,54 +1,56 @@
-# Gestor de Economato Hotelero con Bot de Telegram
+# 🏨 Gestor de Economato Hotelero Inteligente
 
-Este proyecto es un sistema de gestión de pedidos para un economato hotelero. Permite unificar catálogos de proveedores, buscar el mejor precio para productos y gestionar pedidos a través de un bot de Telegram.
+> **Sistema de gestión de pedidos automatizado con Bot de Telegram, comparador de precios inteligente y envío de correos.**
 
-## Estructura del Proyecto
+Este proyecto moderniza el departamento de compras de un hotel. Permite unificar catálogos de múltiples proveedores, encontrar automáticamente el mejor precio, gestionar la lista de la compra desde un chat y tramitar los pedidos por email con un solo comando.
 
-- `src/`: Código fuente del proyecto.
-  - `bot_telegram.py`: El bot que interactúa con el usuario. Recibe listas de compra y gestiona favoritos.
-  - `buscador.py`: Lógica para buscar productos en el catálogo unificado y determinar el mejor precio (o el proveedor VIP).
-  - `gestor_pedidos.py`: Genera la orden final en texto plano.
-  - `procesador.py`: Script para normalizar y unificar los Excel de proveedores en un CSV maestro.
-- `proveedores_input/`: Carpeta donde se colocan los Excel de los proveedores.
-- `preferencias.json`: Almacena las preferencias VIP del usuario (ignorada en git).
+## ✨ Características Principales
 
-## Instalación
+- **🧠 Búsqueda Inteligente ("Portero de Discoteca"):** Distingue entre productos similares (ej: *Leche Entera* vs *Semi*), corrige errores tipográficos y rechaza inputs basura.
+- **💰 Comparador Automático:** Selecciona siempre el proveedor más barato para cada producto, salvo que tengas un favorito VIP.
+- **📧 Envío de Correos Pro:** Genera y envía emails HTML profesionales a cada proveedor con su parte del pedido.
+- **📊 Business Intelligence:** Guarda un historial (`historial_pedidos.xlsx`) con el detalle de compras y una tabla resumen de gastos por proveedor.
+- **➕ Agrupación Visual:** Si pides lo mismo varias veces (ej: 5kg y luego 2kg), el sistema lo agrupa visualmente en el pedido final.
 
-1.  Clona el repositorio.
-2.  Crea un entorno virtual:
+## 📂 Estructura del Proyecto
+
+- `src/`: Código fuente.
+  - `bot_telegram.py`: El cerebro del bot. Gestiona comandos y flujo de conversación.
+  - `buscador.py`: Motor de búsqueda con lógica difusa (*fuzzy logic*) y reglas de desambiguación.
+  - `enviador.py`: Gestor de correo SMTP. Genera emails HTML y distribuye pedidos.
+  - `gestor_pedidos.py`: Genera los resúmenes de texto y agrupa cantidades.
+  - `procesador.py`: Normaliza y unifica cualquier Excel de proveedores en una base de datos maestra (`catalogo_unificado.csv`).
+  - `historial.py`: Registra cada pedido en un Excel contable.
+- `proveedores_input/`: Carpeta para soltar los catálogos `.xlsx` de los proveedores.
+- `scripts_extra/`: Herramientas de utilidad (generación de datos de prueba, tests de integración).
+- `archivos de configuración`: `.env` (seguridad), `contactos.json` (emails), `preferencias.json` (favoritos).
+
+## 🚀 Instalación
+
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone [https://github.com/tu-usuario/Economato_bot.git](https://github.com/tu-usuario/Economato_bot.git)
+    cd Economato_bot
+    ```
+
+2.  **Crear entorno virtual:**
     ```bash
     python -m venv venv
-    source venv/bin/activate  # En Windows: venv\Scripts\activate
+    source venv/bin/activate  # Windows: venv\Scripts\activate
     ```
-3.  Instala las dependencias:
+
+3.  **Instalar dependencias:**
     ```bash
     pip install -r requirements.txt
     ```
-4.  Configura las variables de entorno (ver sección Seguridad).
 
-## Uso
+4.  **Configuración Segura:**
+    * Renombra `.env.example` a `.env` y añade tu **Token de Telegram** y credenciales de **Gmail**.
+    * Renombra `contactos.json.example` a `contactos.json` y añade los emails reales de tus proveedores.
 
-1.  **Preparar Datos**: Coloca los catálogos `.xlsx` en `proveedores_input/` y ejecuta:
-    ```bash
-    python src/procesador.py
-    ```
-2.  **Iniciar Bot**:
-    ```bash
-    python src/bot_telegram.py
-    ```
-3.  **Telegram**:
-    - `/start`: Inicia la interacción.
-    - Escribe tu lista de compra (ej: "Leche, Tomates").
-    - `/vip [producto] [proveedor]`: Fuerza un proveedor favorito.
-    - `/quitarvip [producto]`: Elimina la preferencia.
-    - `/pedir`: Genera la orden final.
+## 📖 Uso del Bot
 
-## Seguridad
-
-Este proyecto requiere un Token de Telegram.
-**NO** subas tu token al repositorio.
-Crea un archivo `.env` (basado en `.env.example` si existiera) y añade:
-```
-TELEGRAM_TOKEN=tu_token_aqui
-```
-(Nota: La implementación actual lee el token directamente. Se recomienda refactorizar para usar `python-dotenv`).
+### 1. Preparación de Datos
+Coloca los catálogos de tus proveedores (`.xlsx`) en la carpeta `proveedores_input/` y actualiza la base de datos:
+```bash
+python src/procesador.py
