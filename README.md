@@ -1,56 +1,54 @@
-# Hotel Commissary Manager with Telegram Bot
+# Gestor de Economato Hotelero con Bot de Telegram
 
-> 🚧 **Work in Progress (WIP)**: This project is currently under active development. Features are subject to change, and optimizations are ongoing.
+Este proyecto es un sistema de gestión de pedidos para un economato hotelero. Permite unificar catálogos de proveedores, buscar el mejor precio para productos y gestionar pedidos a través de un bot de Telegram.
 
-This project is an order management system designed for a hotel commissary (*economato*). It allows users to unify supplier catalogs, automatically search for the best product prices, and manage orders seamlessly through a Telegram bot.
+## Estructura del Proyecto
 
-## Project Structure
+- `src/`: Código fuente del proyecto.
+  - `bot_telegram.py`: El bot que interactúa con el usuario. Recibe listas de compra y gestiona favoritos.
+  - `buscador.py`: Lógica para buscar productos en el catálogo unificado y determinar el mejor precio (o el proveedor VIP).
+  - `gestor_pedidos.py`: Genera la orden final en texto plano.
+  - `procesador.py`: Script para normalizar y unificar los Excel de proveedores en un CSV maestro.
+- `proveedores_input/`: Carpeta donde se colocan los Excel de los proveedores.
+- `preferencias.json`: Almacena las preferencias VIP del usuario (ignorada en git).
 
-- `src/`: Source code directory.
-  - `bot_telegram.py`: The main bot interface. It receives shopping lists and manages user favorites.
-  - `buscador.py`: Logic to search products within the unified catalog and determine the best price (or select the VIP supplier).
-  - `gestor_pedidos.py`: Generates the final order in plain text format.
-  - `procesador.py`: Script to normalize and unify different supplier Excel files into a master CSV.
-- `proveedores_input/`: Directory to place supplier Excel catalogs (`.xlsx`).
-- `preferencias.json`: Stores user VIP preferences (ignored by git).
+## Instalación
 
-## Installation
-
-1.  Clone the repository.
-2.  Create a virtual environment:
+1.  Clona el repositorio.
+2.  Crea un entorno virtual:
     ```bash
     python -m venv venv
-    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    source venv/bin/activate  # En Windows: venv\Scripts\activate
     ```
-3.  Install dependencies:
+3.  Instala las dependencias:
     ```bash
     pip install -r requirements.txt
     ```
-4.  Configure environment variables (see **Security** section).
+4.  Configura las variables de entorno (ver sección Seguridad).
 
-## Usage
+## Uso
 
-1.  **Prepare Data**: Place your supplier catalogs (`.xlsx` files) inside the `proveedores_input/` folder and run:
+1.  **Preparar Datos**: Coloca los catálogos `.xlsx` en `proveedores_input/` y ejecuta:
     ```bash
     python src/procesador.py
     ```
-2.  **Start the Bot**:
+2.  **Iniciar Bot**:
     ```bash
     python src/bot_telegram.py
     ```
-3.  **Telegram Commands**:
-    - `/start`: Starts the interaction.
-    - **Shopping List**: Simply type your items (e.g., "Milk, Tomatoes").
-    - `/vip [product] [supplier]`: Forces a specific supplier for a product (overrides price logic).
-    - `/quitarvip [product]`: Removes the preference (reverts to best price).
-    - `/pedir`: Generates the final order text file.
+3.  **Telegram**:
+    - `/start`: Inicia la interacción.
+    - Escribe tu lista de compra (ej: "Leche, Tomates").
+    - `/vip [producto] [proveedor]`: Fuerza un proveedor favorito.
+    - `/quitarvip [producto]`: Elimina la preferencia.
+    - `/pedir`: Genera la orden final.
 
-## Security
+## Seguridad
 
-This project requires a Telegram Bot Token.
-**DO NOT** upload your token to the repository.
-
-1. Create a `.env` file in the root directory (you can use `.env.example` as a reference).
-2. Add your token inside:
-   ```ini
-   TELEGRAM_TOKEN=your_token_here
+Este proyecto requiere un Token de Telegram.
+**NO** subas tu token al repositorio.
+Crea un archivo `.env` (basado en `.env.example` si existiera) y añade:
+```
+TELEGRAM_TOKEN=tu_token_aqui
+```
+(Nota: La implementación actual lee el token directamente. Se recomienda refactorizar para usar `python-dotenv`).

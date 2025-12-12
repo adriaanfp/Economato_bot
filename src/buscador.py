@@ -17,6 +17,70 @@ def load_preferences():
     except Exception:
         return {}
 
+def buscar_coincidencias(input_usuario):
+    """
+    Busca coincidencias del input del usuario en el catálogo unificado.
+    Retorna:
+    - ('exact', nombre_real): Si > 90%
+    - ('ambiguous', [opciones]): Si 60% <= similitud <= 90%
+    - ('no_match', None): Si < 60%
+    """
+    if not os.path.exists(CSV_FILE):
+        return "no_match", None
+
+    try:
+        df = pd.read_csv(CSV_FILE)
+    except Exception:
+        return "no_match", None
+
+    # Normalizar columna producto
+    choices = df['producto_norm'].unique().tolist()
+    
+    # Regla 0 (Match Exacto case-insensitive)
+    input_lower = input_usuario.lower()
+    choices_lower = [c.lower() for c in choices]
+    if input_lower in choices_lower:
+        # Recuperar el nombre original
+        idx = choices_lower.index(input_lower)
+        return "exact", choices[idx]
+
+    # Fuzzy Search
+    matches = process.extract(input_usuario, choices, limit=5)
+    
+    # Filtrar por umbral mínimo (80)
+    filtered = [m for m in matches if m[1] >= 80]
+    
+    if not filtered:
+        return "no_match", None
+
+    best = filtered[0]
+    
+    # Regla 1 (Casi Perfecto)
+    if best[1] >= 98:
+        return "exact", best[0]
+
+    # Regla 2 (Candidato Único)
+    if len(filtered) == 1:
+        return "exact", best[0]
+    
+    # Regla 3 (Gap/Distancia)
+    second = filtered[1]
+    if (best[1] - second[1]) >= 10:
+        return "exact", best[0]
+
+    # Regla 4 (Plurales)
+    # Comprobar si la única diferencia entre el 1º y el 2º es una 's' al final
+    name1 = best[0].lower()
+    name2 = second[0].lower()
+    
+    # Verificar si uno es plural del otro (simplemente agregando 's')
+    if (name1 == name2 + 's') or (name2 == name1 + 's'):
+        # Si son el mismo producto (singular/plural), devolvemos el de mayor puntuación (el 1º) como exacto
+        return "exact", best[0]
+
+    # Si no se cumple nada -> Ambigüedad
+    return "ambiguous", [m[0] for m in filtered[:3]]
+
 def obtener_datos_mejor_precio(producto_buscado):
     if not os.path.exists(CSV_FILE):
         return {"error": "catalogo_unificado.csv no encontrado. Ejecuta procesador.py primero."}
@@ -29,20 +93,23 @@ def obtener_datos_mejor_precio(producto_buscado):
     # Aseguramos que la columna proveedor sea string
     df['proveedor'] = df['proveedor'].astype(str)
 
-    # Obtener lista de productos únicos normalizados
-    choices = df['producto_norm'].unique().tolist()
+    # USAR LÓGICA CENTRALIZADA
+    match_type, match_result = buscar_coincidencias(producto_buscado)
     
-    # Buscar coincidencias
-    matches = process.extract(producto_buscado.lower(), choices, limit=10)
+    nombre_final = None
     
-    # Filtrar por puntuación > 60
-    valid_matches = [match[0] for match in matches if match[1] > 60]
-    
-    if not valid_matches:
+    if match_type == "exact":
+        nombre_final = match_result
+    elif match_type == "ambiguous":
+        # Si es ambiguo, para generación de pedidos automática, tomamos el primero
+        # pero logueamos advertencia (o idealmente devolvemos error si es estricto)
+        # Por ahora tomamos el primero de la lista de ambigüedad
+        nombre_final = match_result[0] 
+    else:
         return None
 
-    # Filtrar dataframe por estos productos
-    candidates = df[df['producto_norm'].isin(valid_matches)].copy()
+    # Filtrar dataframe por este nombre final
+    candidates = df[df['producto_norm'] == nombre_final].copy()
     
     if candidates.empty:
          return None

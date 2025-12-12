@@ -1,11 +1,77 @@
 producto,precio,formato,proveedor,producto_norm
-Huevos,2.1,Docena,Proveedor_A,huevos
-Huevos L,2.2,12 uds,Proveedor_B,huevos l
-Leche,0.85,L,Proveedor_B,leche
-Leche Entera,0.9,Litro,Proveedor_A,leche entera
-Patata Monalisa,0.75,Kilogramo,Proveedor_B,patata monalisa
-Patatas,0.8,Kg,Proveedor_A,patatas
-Solomillo de Ternera,25.0,Kg,Proveedor_A,solomillo de ternera
-Solomillo Vacuno,26.5,Kilogramo,Proveedor_B,solomillo vacuno
-Tomate Pera,1.4,Kilogramo,Proveedor_B,tomate pera
-Tomates,1.5,Kg,Proveedor_A,tomates
+Bacalao Desalado,16.0,kg,Pescados_Mar,bacalao desalado
+Bacalao Desalado,16.87,kg,General_Cash,bacalao desalado
+Bolsa Basura 100L,3.0,rollo,Limpieza_Total,bolsa basura 100l
+Carne Picada Mixta,8.0,kg,Carnes_Pepe,carne picada mixta
+Carne Picada Mixta,8.18,kg,General_Cash,carne picada mixta
+Cebolla Grano,0.6,kg,Frutas_Paco,cebolla grano
+Cebolla Grano,0.62,kg,General_Cash,cebolla grano
+Cebolla Grano,0.64,kg,Verduras_Maria,cebolla grano
+Cebolla Morada,0.73,kg,Verduras_Maria,cebolla morada
+Cebolla Morada,0.76,kg,General_Cash,cebolla morada
+Cebolla Morada,0.8,kg,Frutas_Paco,cebolla morada
+Detergente Ropa,10.9,bidón,General_Cash,detergente ropa
+Detergente Ropa,12.0,bidón,Limpieza_Total,detergente ropa
+Entrecot Vaca,18.0,kg,Carnes_Pepe,entrecot vaca
+Huevo L,0.15,unidad,Lacteos_Central,huevo l
+Langostino Cocido,11.0,kg,Pescados_Mar,langostino cocido
+Langostino Cocido,11.38,kg,General_Cash,langostino cocido
+Lavavajillas Mano,2.5,litro,Limpieza_Total,lavavajillas mano
+Leche Avena,1.3,litro,Lacteos_Central,leche avena
+Leche Avena,1.38,litro,General_Cash,leche avena
+Leche Desnatada,0.85,litro,Lacteos_Central,leche desnatada
+Leche Desnatada,0.88,litro,General_Cash,leche desnatada
+Leche Entera,0.85,litro,Lacteos_Central,leche entera
+Leche Entera,0.86,litro,General_Cash,leche entera
+Leche Semidesnatada,0.85,litro,Lacteos_Central,leche semidesnatada
+Leche Soja,1.2,litro,Lacteos_Central,leche soja
+Lejía Conejo,0.9,litro,Limpieza_Total,lejía conejo
+Lejía Conejo,0.97,litro,General_Cash,lejía conejo
+Limpiacristales,1.5,spray,Limpieza_Total,limpiacristales
+Limón Malla,1.42,malla,Verduras_Maria,limón malla
+Limón Malla,1.5,malla,Frutas_Paco,limón malla
+Lomo Adobado,7.0,kg,Carnes_Pepe,lomo adobado
+Lomo Adobado,7.34,kg,General_Cash,lomo adobado
+Mantequilla Bloque,8.0,kg,Lacteos_Central,mantequilla bloque
+Manzana Fuji,1.7,kg,Frutas_Paco,manzana fuji
+Manzana Fuji,1.84,kg,General_Cash,manzana fuji
+Manzana Golden,1.5,kg,Frutas_Paco,manzana golden
+Manzana Golden,1.6,kg,General_Cash,manzana golden
+Merluza Rodaja,12.0,kg,Pescados_Mar,merluza rodaja
+Muslo Pollo,4.16,kg,General_Cash,muslo pollo
+Muslo Pollo,4.5,kg,Carnes_Pepe,muslo pollo
+Naranja Mesa,1.18,kg,Verduras_Maria,naranja mesa
+Naranja Mesa,1.2,kg,Frutas_Paco,naranja mesa
+Naranja Mesa,1.32,kg,General_Cash,naranja mesa
+Nata Cocina,3.5,litro,Lacteos_Central,nata cocina
+Nata Cocina,3.58,litro,General_Cash,nata cocina
+Patata Kennebec,1.05,kg,General_Cash,patata kennebec
+Patata Kennebec,1.1,kg,Frutas_Paco,patata kennebec
+Patata Monalisa,0.9,kg,Frutas_Paco,patata monalisa
+Patata Monalisa,0.95,kg,Verduras_Maria,patata monalisa
+Patata Monalisa,0.98,kg,General_Cash,patata monalisa
+Patata Roja,1.2,kg,Frutas_Paco,patata roja
+Patata Roja,1.22,kg,General_Cash,patata roja
+Patata Roja,1.26,kg,Verduras_Maria,patata roja
+Pechuga Pollo,6.5,kg,Carnes_Pepe,pechuga pollo
+Plátano Canarias,1.72,kg,Verduras_Maria,plátano canarias
+Plátano Canarias,1.75,kg,General_Cash,plátano canarias
+Plátano Canarias,1.9,kg,Frutas_Paco,plátano canarias
+Queso Cheddar Lonchas,9.0,kg,Lacteos_Central,queso cheddar lonchas
+Queso Mozzarella Rallado,7.5,kg,Lacteos_Central,queso mozzarella rallado
+Rollo Cocina Ind,3.62,pack,General_Cash,rollo cocina ind
+Rollo Cocina Ind,4.0,pack,Limpieza_Total,rollo cocina ind
+Salmón Noruego,13.55,kg,General_Cash,salmón noruego
+Salmón Noruego,14.0,kg,Pescados_Mar,salmón noruego
+Sepia Limpia,10.0,kg,Pescados_Mar,sepia limpia
+Sepia Limpia,10.58,kg,General_Cash,sepia limpia
+Solomillo Cerdo,9.0,kg,Carnes_Pepe,solomillo cerdo
+Solomillo Ternera,22.0,kg,Carnes_Pepe,solomillo ternera
+Tomate Cherry,2.5,kg,Frutas_Paco,tomate cherry
+Tomate Cherry,2.64,kg,Verduras_Maria,tomate cherry
+Tomate Cherry,2.65,kg,General_Cash,tomate cherry
+Tomate Ensalada,1.75,kg,General_Cash,tomate ensalada
+Tomate Ensalada,1.8,kg,Frutas_Paco,tomate ensalada
+Tomate Pera,1.4,kg,Frutas_Paco,tomate pera
+Tomate Rama,1.6,kg,Frutas_Paco,tomate rama
+Tomate Rama,1.67,kg,Verduras_Maria,tomate rama

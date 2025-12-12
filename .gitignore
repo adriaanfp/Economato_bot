@@ -1,0 +1,35 @@
+# --- Python & Entornos ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.venv/
+
+# --- IDEs ---
+.vscode/
+.idea/
+
+# --- Datos del Negocio (Ignorar todo) ---
+*.xlsx
+*.xls
+*.csv
+# Ignoramos todos los txt excepto requirements
+*.txt
+!requirements.txt
+
+# --- Carpetas Específicas de Datos ---
+# Ignoramos el contenido de proveedores_input, pero MANTENEMOS la carpeta
+proveedores_input/*
+!proveedores_input/.gitkeep
+
+# --- Archivos generados ---
+ORDEN_FINAL.txt
+catalogo_unificado.csv
+
+# --- Configuración ---
+# Ignoramos el real, pero asegúrate de subir un ejemplo (ver instrucciones abajo)
+preferencias.json
